@@ -58,12 +58,6 @@ digraph brainstorming {
 
 ## The Process
 
-**Model selection (before anything else):**
-- Use `AskUserQuestion` to ask: "Which model would you like to use for this brainstorming session?"
-- Offer three options: Haiku (fast, efficient), Sonnet (balanced, recommended), Opus (most capable, complex problems)
-- After user selects, say: "Please run `/model haiku`, `/model sonnet`, or `/model opus` to switch, then let me know when you're ready."
-- Wait for confirmation before proceeding.
-
 **Understanding the idea:**
 - Check out the current project state first (files, docs, recent commits)
 - Ask questions one at a time to refine the idea
