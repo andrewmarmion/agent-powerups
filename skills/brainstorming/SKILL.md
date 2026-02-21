@@ -34,7 +34,6 @@ You MUST create a task for each of these items and complete them in order:
 
 ```dot
 digraph brainstorming {
-    "Select model" [shape=box];
     "Explore project context" [shape=box];
     "Ask clarifying questions" [shape=box];
     "Propose 2-3 approaches" [shape=box];
@@ -43,7 +42,6 @@ digraph brainstorming {
     "Write design doc" [shape=box];
     "Invoke writing-plans skill" [shape=doublecircle];
 
-    "Select model" -> "Explore project context";
     "Explore project context" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Propose 2-3 approaches";
     "Propose 2-3 approaches" -> "Present design sections";
