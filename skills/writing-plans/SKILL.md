@@ -98,11 +98,13 @@ git commit -m "feat: add specific feature"
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `docs/plans/<filename>.md`. Three execution options:**
 
 **1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
 
 **2. Parallel Session (separate)** - Open new session with executing-plans, batch execution with checkpoints
+
+**3. Linear/Graphite workflow** - Decompose into Linear tickets, execute with stacked PRs and CodeRabbit review
 
 **Which approach?"**
 
@@ -114,3 +116,9 @@ After saving the plan, offer execution choice:
 **If Parallel Session chosen:**
 - Guide them to open new session in worktree
 - **REQUIRED SUB-SKILL:** New session uses agent-powerups:executing-plans
+
+**If Linear/Graphite chosen:**
+- **REQUIRED SUB-SKILL:** Use agent-powerups:decomposing-into-tickets
+- Decomposes plan into coherent <500-line tickets
+- Creates Linear sub-issues via MCP with branch names from Linear
+- Execution creates stacked Graphite branches with per-ticket CodeRabbit review
