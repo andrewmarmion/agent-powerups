@@ -1,0 +1,13 @@
+{
+  "name": "agent-powerups",
+  "description": "Company skill library for Claude Code: development workflows, TDD, debugging, and collaboration patterns",
+  "version": "1.0.0",
+  "author": {
+    "name": "Andrew Marmion",
+    "url": "https://github.com/andrewmarmion"
+  },
+  "homepage": "https://github.com/andrewmarmion/agent-powerups",
+  "repository": "https://github.com/andrewmarmion/agent-powerups",
+  "license": "MIT",
+  "keywords": ["skills", "tdd", "debugging", "collaboration", "workflows"]
+}

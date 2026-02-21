@@ -1,0 +1,19 @@
+{
+  "name": "agent-powerups",
+  "description": "agent-powerups plugin marketplace",
+  "owner": {
+    "name": "Andrew Marmion",
+    "url": "https://github.com/andrewmarmion"
+  },
+  "plugins": [
+    {
+      "name": "agent-powerups",
+      "description": "Company skill library for Claude Code: development workflows, TDD, debugging, and collaboration patterns",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "Andrew Marmion"
+      }
+    }
+  ]
+}
