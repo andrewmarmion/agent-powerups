@@ -19,6 +19,10 @@ A Claude Code plugin providing development workflow skills for consistent, high-
 | `verification-before-completion` | Verify work before claiming it's done |
 | `writing-skills` | Author new skills for this plugin |
 | `using-git-worktrees` | Isolated feature work in git worktrees |
+| `decomposing-into-tickets` | Split a written plan into Linear tickets with stacked PRs |
+| `executing-linear-plan` | Execute a Linear-annotated plan with Graphite branches and CodeRabbit review |
+| `finishing-stacked-prs` | Sync, verify, and submit a completed Graphite stack |
+| `reviewing-stacked-prs` | Work through GitHub review comments across a stacked PR set |
 
 ## Installation
 
