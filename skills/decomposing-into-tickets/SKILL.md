@@ -29,19 +29,22 @@ Estimate line diff per grouping. If a group exceeds ~500 lines, split it further
 
 ### Step 2: Present Ticket Breakdown for Approval
 
-Show the proposed breakdown before touching Linear:
+Show the proposed breakdown before touching Linear. Use descriptive bullets — the breakdown must stand on its own without the user needing to refer to the original plan:
 
 ```
 Proposed tickets:
 
 Ticket 1: [title]
-  Tasks: 1.1, 1.2, 1.3
-  Scope: [1-2 sentence description]
+  Scope: [1-2 sentences, noting any stack dependencies]
+  - [What is being built/tested — descriptive, not task numbers]
+  - [Next bullet]
+  - [Next bullet]
   Est. diff: ~200 lines
 
 Ticket 2: [title]
-  Tasks: 2.1, 2.2
-  Scope: [1-2 sentence description]
+  Scope: [1-2 sentences, noting ticket 1 assumed in stack]
+  - [What is being built/tested]
+  - [Next bullet]
   Est. diff: ~350 lines
 ```
 
