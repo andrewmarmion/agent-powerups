@@ -1,6 +1,6 @@
 ---
 name: reviewing-stacked-prs
-description: Use when a Graphite stack has open PRs ready for GitHub review - discovers stack state from gt and gh, processes CodeRabbit and human review comments bottom-up, discussing every finding before applying fixes
+description: Use when a Graphite stack has open PRs ready for GitHub review - accepts optional branch argument to start from a specific PR, checks all PRs in one pass, processes available feedback bottom-up and flags pending reviews
 ---
 
 # Reviewing Stacked PRs
@@ -12,6 +12,8 @@ A standalone skill for handling the GitHub review phase of a submitted stack. Ma
 **Announce at start:** "I'm using the reviewing-stacked-prs skill to work through the review."
 
 **Assumes:** Checked out at the top of the stack. PRs already submitted via `gt submit`.
+
+**Optional argument:** Branch name to start from (e.g. `andrew/LIN-125-slug`). If not provided, starts from the base of the stack.
 
 **No plan file required** — all state is discovered from `gt` and `gh`.
 
@@ -44,10 +46,13 @@ If any CodeRabbit reviews timed out: warn the user — they may want to trigger 
 
 If reviews are still pending: suggest re-invoking this skill when they're ready rather than waiting in this session.
 
-### Step 3: Work Through Feedback Bottom-Up
+### Step 3: Work Through All PRs Bottom-Up
 
-For each PR with feedback, starting from the **base of the stack**:
+Process all PRs in a single pass starting from the base of the stack (or the branch argument if provided). Do not stop early because some reviews are still pending — handle what is available and flag the rest.
 
+For each PR, bottom-up:
+
+**If feedback is available:**
 1. Show all review comments for this PR
 2. Invoke `agent-powerups:receiving-code-review` to process findings — treat all reviewers (CodeRabbit and human) as external reviewers, discuss **every** finding before applying any fix
 3. Reply to resolved GitHub comments in the PR thread:
@@ -58,7 +63,9 @@ For each PR with feedback, starting from the **base of the stack**:
 4. Run tests after all agreed fixes applied
 5. `gt sync` to restack branches above
 6. `gt submit` to update the PR
-7. Move to next PR up the stack
+
+**If review is still pending:**
+Note it and continue to the next PR — do not skip it in the final report.
 
 **Stop if:**
 - A fix introduces a test failure — stop, report, ask how to proceed
@@ -67,21 +74,21 @@ For each PR with feedback, starting from the **base of the stack**:
 
 ### Step 4: Final State
 
+Report the complete picture — every PR in the range, handled or pending:
+
 ```
 Review complete:
 
 LIN-123 · PR #45 · all feedback addressed · updated
 LIN-124 · PR #46 · no changes needed
-LIN-125 · PR #47 · CodeRabbit timed out — recommend manual review before merging
+LIN-125 · PR #47 · review still pending
 
-Ready to merge. Merge bottom-up via Graphite: LIN-123 first.
+Ready to merge (LIN-123, LIN-124). Merge bottom-up via Graphite: LIN-123 first.
+
+Re-invoke for pending reviews: /agent-powerups:reviewing-stacked-prs andrew/LIN-125-slug
 ```
 
-### Step 5: Re-Invoke if Needed
-
-If reviews were still pending at Step 1:
-
-"Some reviews aren't ready yet. Re-invoke `agent-powerups:reviewing-stacked-prs` when they've posted."
+Only show the re-invoke line if there are pending reviews.
 
 ## Remember
 
