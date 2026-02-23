@@ -76,21 +76,38 @@ For each approved ticket, create a sub-issue with:
 
 After creation, call `get_issue` to retrieve Linear's generated git branch name for each ticket.
 
-### Step 6: Annotate the Plan File
+### Step 6: Create Tickets File
 
-Add Linear metadata to the plan document for each ticket group:
+Create `docs/plans/YYYY-MM-DD-<feature-name>-tickets.md`. This is a full rewrite of the original plan reorganized by ticket — each ticket section is self-contained with all executable steps, exact code, and commands needed to implement it. The original plan is not modified.
+
+Adapt steps for stack position: later tickets omit setup already established by earlier tickets, but preserve all executable detail (exact code, commands, expected output). No pseudocode.
+
+File structure:
 
 ```markdown
-### Ticket 1: [title] — LIN-123
-Branch: andrew/LIN-123-add-data-model
-Tasks: 1.1, 1.2, 1.3
+# [Feature Name] — Linear Tickets
+
+> Source plan: docs/plans/YYYY-MM-DD-<feature-name>.md
+
+## Ticket 1: [Title] — LIN-123
+Branch: andrew/LIN-123-slug
+
+### Step 1: [step title]
+[exact code / command / expected output]
+
+### Step 2: ...
+
+## Ticket 2: [Title] — LIN-124
+Branch: andrew/LIN-124-slug
+
+[steps adapted for stack position]
 ```
 
-Save and commit the annotated plan:
+Commit the new file:
 
 ```bash
-git add docs/plans/<filename>.md
-git commit -m "chore: annotate plan with Linear ticket IDs"
+git add docs/plans/<feature-name>-tickets.md
+git commit -m "chore: add Linear tickets file for <feature-name>"
 ```
 
 ### Step 7: Hand Off
