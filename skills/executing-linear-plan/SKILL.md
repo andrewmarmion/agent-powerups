@@ -7,7 +7,7 @@ description: Use when you have a Linear-annotated implementation plan to execute
 
 ## Overview
 
-Executes a ticket-annotated plan ticket by ticket, creating stacked Graphite branches, running CodeRabbit in the background, discussing every finding with the user before applying any fix, and submitting PRs.
+Executes a tickets file ticket by ticket, creating stacked Graphite branches and launching CodeRabbit in the background per ticket. CR processing and submission are handled by finishing-stacked-prs once all tickets are coded.
 
 **Announce at start:** "I'm using the executing-linear-plan skill to implement this plan."
 
@@ -31,7 +31,7 @@ Executes a ticket-annotated plan ticket by ticket, creating stacked Graphite bra
 
 ### Step 2: Per-Ticket Loop
 
-Repeat for each ticket in the annotated plan:
+Repeat for each ticket in the tickets file:
 
 #### 2a. Create Branch
 
@@ -56,31 +56,17 @@ Run the project's full test suite. Do not proceed if tests fail.
 coderabbit --prompt-only --type committed --base <parent-branch>
 ```
 
-Note the background task ID. The parent branch is the branch this ticket is stacked on (previous ticket's branch, or trunk for the first ticket).
-
-#### 2e. Checkpoint: Process Previous Ticket's CR Findings
-
-Before moving to the next ticket, check if CodeRabbit has finished on the **previous** ticket:
-
-- **Finished:** Invoke `agent-powerups:receiving-code-review` to process findings. Treat CodeRabbit as an external reviewer — discuss **every** finding with the user before applying any fix. After agreed fixes: run `gt sync`, re-run tests.
-- **Still running:** Note it and continue — check again at the next checkpoint.
-
-#### 2f. Submit
-
-```bash
-gt submit --no-interactive
-```
+The parent branch is the branch this ticket is stacked on (previous ticket's branch, or trunk for the first ticket). Note the background task ID — all CR reviews will be processed by `finishing-stacked-prs` once coding is complete.
 
 ### Step 3: Batch Checkpoint (Every 3 Tickets)
 
 Pause and report:
-- Tickets completed, Linear issue IDs, PR links
-- Any outstanding CR reviews not yet processed
-- Ask: "Ready to continue, or do you want to review the stack in Graphite first?"
+- Tickets completed, branch names
+- Ask: "Ready to continue, or do you want to review the branches locally first?"
 
 ### Step 4: Complete
 
-After all tickets done and all CR reviews resolved, announce:
+After all tickets are coded and CR launched on the final ticket, announce:
 
 "Invoking `agent-powerups:finishing-stacked-prs` to complete this work."
 
@@ -101,5 +87,4 @@ Stop immediately and raise with the user when:
 
 **Calls:**
 - `agent-powerups:executing-plans` — referenced for inner task execution pattern
-- `agent-powerups:receiving-code-review` — for all CodeRabbit findings, every ticket
 - `agent-powerups:finishing-stacked-prs` — after all tickets complete
