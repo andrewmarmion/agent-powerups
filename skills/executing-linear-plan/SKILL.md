@@ -11,7 +11,7 @@ Executes a ticket-annotated plan ticket by ticket, creating stacked Graphite bra
 
 **Announce at start:** "I'm using the executing-linear-plan skill to implement this plan."
 
-**Requires:** Graphite CLI (`gt`), CodeRabbit CLI (`coderabbit`), Linear MCP connected, annotated plan file with ticket IDs and branch names.
+**Requires:** Graphite CLI (`gt`), CodeRabbit CLI (`coderabbit`), Linear MCP connected, tickets file at `docs/plans/YYYY-MM-DD-<feature-name>-tickets.md`.
 
 **Never start on main/master without explicit user consent.**
 
@@ -19,7 +19,7 @@ Executes a ticket-annotated plan ticket by ticket, creating stacked Graphite bra
 
 ### Step 1: Load and Review Plan
 
-1. Read the annotated plan file
+1. Read the tickets file (`docs/plans/YYYY-MM-DD-<feature-name>-tickets.md`)
 2. Review critically — identify any concerns before starting
 3. Confirm `gt` is configured and the worktree is on the correct base branch:
    ```bash
