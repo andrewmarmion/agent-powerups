@@ -9,7 +9,7 @@
     {
       "name": "agent-powerups",
       "description": "Company skill library for Claude Code: development workflows, TDD, debugging, and collaboration patterns",
-      "version": "1.0.1",
+      "version": "1.0.3",
       "source": "./",
       "author": {
         "name": "Andrew Marmion"
