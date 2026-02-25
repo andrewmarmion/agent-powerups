@@ -28,7 +28,8 @@ You MUST create a task for each of these items and complete them in order:
 3. **Propose 2-3 approaches** — with trade-offs and your recommendation
 4. **Present design** — in sections scaled to their complexity, get user approval after each section
 5. **Write design doc** — save to `docs/plans/YYYY-MM-DD-<topic>-design.md` and commit
-6. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+6. **Review checkpoint** — present two options: Write plan / Suggest changes
+7. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 
@@ -40,6 +41,8 @@ digraph brainstorming {
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
     "Write design doc" [shape=box];
+    "Review checkpoint" [shape=diamond];
+    "Update design doc" [shape=box];
     "Invoke writing-plans skill" [shape=doublecircle];
 
     "Explore project context" -> "Ask clarifying questions";
@@ -48,7 +51,10 @@ digraph brainstorming {
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
     "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Invoke writing-plans skill";
+    "Write design doc" -> "Review checkpoint";
+    "Review checkpoint" -> "Update design doc" [label="2. Suggest changes"];
+    "Update design doc" -> "Review checkpoint";
+    "Review checkpoint" -> "Invoke writing-plans skill" [label="1. Write plan"];
 }
 ```
 
@@ -81,6 +87,17 @@ digraph brainstorming {
 - Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
+
+**Review checkpoint:**
+
+Present to the user:
+
+> Design doc saved to `docs/plans/YYYY-MM-DD-<topic>-design.md`. Review it, then choose:
+> 1. Write plan
+> 2. Suggest changes
+
+- If **1**: invoke writing-plans immediately
+- If **2**: apply the user's changes to the design doc, commit the revision, present the two options again — loop until **1** is chosen
 
 **Implementation:**
 - Invoke the writing-plans skill to create a detailed implementation plan
