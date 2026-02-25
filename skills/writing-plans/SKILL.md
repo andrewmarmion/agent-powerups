@@ -127,8 +127,7 @@ No test files. No test commands. No TDD steps.
 - Complete code in plan (not "add validation")
 - Exact commands with expected output
 - Reference relevant skills with @ syntax
-- DRY, YAGNI, frequent commits
-- TDD unless in prototype mode
+- DRY, YAGNI, TDD, frequent commits (omit TDD steps in prototype mode)
 
 ## Execution Handoff
 
