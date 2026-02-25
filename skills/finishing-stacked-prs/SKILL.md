@@ -25,45 +25,57 @@ gt sync   # rebase stack against latest remote base first
 - Once sync is clean: run the project's full test suite
 - If tests fail: **stop**, report failures, do not proceed
 
-### Step 2: Wait for All CR Reviews
+### Step 2: Sequential Per-Branch CR Loop
 
-Check all running CodeRabbit background tasks. **Wait for every outstanding review to complete before processing any.** Do not `gt sync` while any review is in-flight.
+Process each branch bottom-up — one at a time, base of stack first.
 
-Once all reviews have settled, categorise each ticket as:
-- **Passed** — CR completed, findings ready to process (or no findings)
-- **Failed** — CR timed out or rate limited
+For each branch:
 
-Identify the **failure point**: the lowest ticket in the stack that failed. All tickets from the failure point upwards will not be processed in this pass.
+#### 2a. Launch CodeRabbit
 
-#### If all tickets passed:
+```bash
+coderabbit --prompt-only --type committed --base <previous-branch>
+```
 
-Process findings bottom-up — one ticket at a time, base of stack first:
-1. Invoke `agent-powerups:receiving-code-review` for this ticket's findings — discuss every finding before applying any fix
-2. Run tests after agreed fixes applied
-3. `gt sync` to restack branches above
-4. Move to next ticket up the stack
+`<previous-branch>` is the immediately preceding branch in the stack — trunk for the first ticket, the previous ticket's branch for all others. **Never use trunk as `--base` for any ticket except the first.**
 
-Only proceed to Step 3 when all findings are resolved and tests pass.
+#### 2b. Wait for Review
 
-#### If there is a failure point:
+Wait for this review to complete before proceeding. Do not move to the next branch while this review is in-flight.
 
-Process and `gt sync` all tickets below the failure point as above.
+If CodeRabbit times out or is rate-limited: this is the **failure point**. Process and `gt sync` all branches below this point that have already been reviewed, then stop.
 
-Then report and stop:
+Report and stop:
 
 ```
 CR failed for:
 - LIN-125 (rate limited)
-- LIN-126 (rate limited)
+- LIN-126 (not started)
 
 Submitting passing tickets only.
 ```
 
-Proceed to Step 3 with only the passing tickets. At the end, report the re-invoke command:
+Proceed to Step 3 with only the passing tickets. Report the re-invoke command:
 
 ```
 Re-invoke with: /agent-powerups:finishing-stacked-prs <failure-point-branch>
 ```
+
+#### 2c. Process Findings
+
+Invoke `agent-powerups:receiving-code-review` for this ticket's findings — discuss every finding before applying any fix.
+
+#### 2d. Verify Tests
+
+Run the project's full test suite after agreed fixes are applied. Do not proceed if tests fail.
+
+#### 2e. Restack
+
+```bash
+gt sync
+```
+
+Then move to the next branch up the stack.
 
 ### Step 3: Submit Decision
 
@@ -115,7 +127,8 @@ Ask: "Keep the worktree open while reviews are in progress, or clean it up now?"
 
 - Always `gt sync` **before** running tests — test the rebased state
 - Never submit with failing tests
-- Wait for **all** CR reviews before processing any — never `gt sync` while reviews are in-flight
+- Process CR one branch at a time — never move to the next branch while a review is in-flight
+- `--base` must be the immediately preceding branch — never trunk except for the first ticket
 - Submit only the contiguous passing block from the base up to the first failure point
 - The submit decision belongs to the user — never auto-submit
 - Only clean up worktree when the user explicitly asks

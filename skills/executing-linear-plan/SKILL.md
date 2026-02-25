@@ -46,17 +46,29 @@ Follow the same execution pattern as `agent-powerups:executing-plans` — mark i
 
 Do not proceed to the next ticket if any task fails or is unclear.
 
+Once all tasks for the ticket are complete, commit with this format:
+
+```
+<ticket_no>: short imperative description
+
+- Bullet summarising first change covered by this ticket
+- Bullet summarising second change
+- ...
+```
+
+Pull the subject and body bullets directly from the ticket's section in the tickets file — the scope summary and task list are already there. Example:
+
+```
+LIN-123: add Conversation/Reply Core Data model and fetch helpers
+
+- Add Conversation and Reply entities to RoverCommHubModel.xcdatamodeld
+- Create InboxPersistentContainer+Conversations.swift with fetch helpers
+- Add ConversationFetchTests with 5 unit tests
+```
+
 #### 2c. Verify Tests Pass
 
 Run the project's full test suite. Do not proceed if tests fail.
-
-#### 2d. Launch CodeRabbit in Background
-
-```bash
-coderabbit --prompt-only --type committed --base <parent-branch>
-```
-
-The parent branch is the branch this ticket is stacked on (previous ticket's branch, or trunk for the first ticket). Note the background task ID — all CR reviews will be processed by `finishing-stacked-prs` once coding is complete.
 
 ### Step 3: Batch Checkpoint (Every 3 Tickets)
 
@@ -66,7 +78,7 @@ Pause and report:
 
 ### Step 4: Complete
 
-After all tickets are coded and CR launched on the final ticket, announce:
+After all tickets are coded and tests pass, announce:
 
 "Invoking `agent-powerups:finishing-stacked-prs` to complete this work."
 

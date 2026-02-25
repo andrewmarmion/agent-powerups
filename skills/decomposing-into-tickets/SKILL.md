@@ -73,6 +73,7 @@ For each approved ticket, create a sub-issue with:
 - **Assignee:** from Step 4
 - **Label(s):** from Step 4
 - **Parent:** ticket confirmed in Step 3
+- **State:** `Todo`
 
 After creation, call `get_issue` to retrieve Linear's generated git branch name for each ticket.
 
