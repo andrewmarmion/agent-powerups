@@ -7,6 +7,7 @@ A Claude Code plugin providing development workflow skills for consistent, high-
 | Skill | Purpose |
 |-------|---------|
 | `brainstorming` | Turn ideas into designs before writing code |
+| `prototyping` | Lightweight brainstorming variant for spikes and POCs — no testing |
 | `writing-plans` | Create bite-sized implementation plans |
 | `executing-plans` | Work through plans task-by-task |
 | `test-driven-development` | Red/green/refactor TDD workflow |
