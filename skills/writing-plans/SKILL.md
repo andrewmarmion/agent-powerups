@@ -11,6 +11,8 @@ Write comprehensive implementation plans assuming the engineer has zero context 
 
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
+**If invoked with a prototype mode override:** follow the Prototype Mode section below. Omit all test steps throughout the plan.
+
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
 **Context:** This should be run in a dedicated worktree (created by brainstorming skill).
@@ -87,12 +89,46 @@ git commit -m "feat: add specific feature"
 ```
 ````
 
+## Prototype Mode
+
+When invoked with a prototype mode override, replace the standard task structure with this:
+
+````markdown
+### Task N: [Component Name]
+
+**Files:**
+- Create: `exact/path/to/file.py`
+- Modify: `exact/path/to/existing.py:123-145`
+
+**Step 1: Write implementation**
+
+```python
+def function(input):
+    return result
+```
+
+**Step 2: Manually verify**
+
+Run: `python src/path/file.py`
+Expected: [describe what correct output looks like]
+
+**Step 3: Commit**
+
+```bash
+git add src/path/file.py
+git commit -m "feat: add specific feature"
+```
+````
+
+No test files. No test commands. No TDD steps.
+
 ## Remember
 - Exact file paths always
 - Complete code in plan (not "add validation")
 - Exact commands with expected output
 - Reference relevant skills with @ syntax
-- DRY, YAGNI, TDD, frequent commits
+- DRY, YAGNI, frequent commits
+- TDD unless in prototype mode
 
 ## Execution Handoff
 
