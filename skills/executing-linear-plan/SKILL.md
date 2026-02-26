@@ -40,7 +40,17 @@ gt branch create <branch-name-from-plan>
 # e.g. gt branch create andrew/LIN-123-add-data-model
 ```
 
-#### 2b. Execute Tasks
+#### 2b. Update Linear Status
+
+Using the Linear MCP, update the ticket's issue state to "In Progress":
+
+```
+save_issue(id: <ticket-id-from-plan>, state: "In Progress")
+```
+
+The ticket ID is in the tickets file header (e.g. `## Ticket 1: Title — LIN-123`).
+
+#### 2c. Execute Tasks
 
 Follow the same execution pattern as `agent-powerups:executing-plans` — mark in_progress, follow each step exactly, run verifications as specified, stop when blocked.
 
@@ -66,7 +76,7 @@ LIN-123: add Conversation/Reply Core Data model and fetch helpers
 - Add ConversationFetchTests with 5 unit tests
 ```
 
-#### 2c. Verify Tests Pass
+#### 2d. Verify Tests Pass
 
 Run the project's full test suite. Do not proceed if tests fail.
 
